@@ -9,9 +9,10 @@ const refs = {
 };
 
 class CountdownTimer {
-    constructor({ onTick, targetDate }) {
-        this.onTick = onTick;
+    constructor({ targetDate, selector }) {
+        this.selector = selector;
         this.targetDate = targetDate;
+        this.start();
     }
 
     start() {
@@ -20,7 +21,7 @@ class CountdownTimer {
             const deltaTime = this.targetDate - currentTime;
             const timeComponents = this.getTimeComponents(deltaTime);
 
-            this.onTick(timeComponents);
+            this.updateCountdownTimerFace(timeComponents);
         }, 1000);
     }
 
@@ -36,48 +37,18 @@ class CountdownTimer {
      pad(value) {
          return String(value).padStart(2, '0');
     }
+    
+    updateCountdownTimerFace({ days, hours, mins, secs }) {
+        document.querySelector(this.selector,).children[0].children[0].textContent = days;
+        document.querySelector(this.selector,).children[1].children[0].textContent = hours;
+        document.querySelector(this.selector,).children[2].children[0].textContent = mins;
+        document.querySelector(this.selector,).children[3].children[0].textContent = secs;
+    }
 }
 
-function updateCountdownTimerFace({ days, hours, mins, secs }) {
-    refs.days.textContent = days;
-    refs.hours.textContent = hours;
-    refs.mins.textContent = mins;
-    refs.secs.textContent = secs;
-}
 
 const newCountdownTimer = new CountdownTimer({
     selector: '#timer-1',
     targetDate: new Date('June 13, 2021'),
-    onTick: updateCountdownTimerFace,
 })
 
-newCountdownTimer.start();
-
-
-// const CountdownTimer = {
-//     start() {
-//         const targetDate = new Date('June 13, 2021');
-
-//         setInterval(() => {
-//             const currentTime = Date.now();
-//             const deltaTime = targetDate - currentTime;
-//             const timeComponents= getTimeComponents(deltaTime);
-//             updateCountdownTimerFace(timeComponents);
-//         }, 1000);
-//     },
-// };
-
-// function pad(value) {
-//     return String(value).padStart(2, '0');
-// };
-
-// function getTimeComponents(time) {
-//     const days = pad(Math.floor(time / (1000 * 60 * 60 * 24)));
-//     const hours = pad(Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-//     const mins = pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
-//     const secs = pad(Math.floor((time % (1000 * 60)) / 1000));
-
-//     return { days, hours, mins, secs };
-// }; 
-
-// CountdownTimer.start();
