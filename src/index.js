@@ -1,13 +1,5 @@
 import './sass/main.scss';
 
-const refs = {
-    timer: document.querySelector('#timer-1'),
-    days: document.querySelector('[data-value=days]'),
-    hours: document.querySelector('[data-value=hours]'),
-    mins: document.querySelector('[data-value=mins]'),
-    secs: document.querySelector('[data-value=secs]'),
-};
-
 class CountdownTimer {
     constructor({ targetDate, selector }) {
         this.selector = selector;
@@ -45,7 +37,6 @@ class CountdownTimer {
         document.querySelector(this.selector,).children[3].children[0].textContent = secs;
     }
 }
-
 
 const newCountdownTimer = new CountdownTimer({
     selector: '#timer-1',
